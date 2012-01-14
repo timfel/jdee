@@ -106,24 +106,13 @@
       <arg value="--eval"/>
       <arg value="(message &quot;%S&quot; (if (featurep 'xemacs) 'true 'false))"/>
     </exec>
-    <if>
-	<equals arg1="${build.lisp.is-xemacs}" arg2="true"/>
-	<then>
-	    <copy todir="${build.lisp.dir}">
-		<fileset dir="${src.xelisp.dir}">
-		    <include name="*.el"/>
-		    <exclude name=".dir-locals.el"/>
-		</fileset>
-	    </copy>
-	</then>
-    </if>
 
     <!-- make windows paths "mixed" dos paths (cygwin term) -->
-    <mixed-path property="cedet.escaped.dir" value="${cedet.dir}"/>
-    <mixed-path property="elib.escaped.dir" value="${elib.dir}"/>
-    <mixed-path property="src.lisp.escaped.dir" value="${src.lisp.dir}"/>
-    <mixed-path property="build.lisp.escaped.dir" value="${build.lisp.dir}"/>
-    <mixed-path property="build.lisp.dst.escaped.file" value="${build.lisp.dst.file}"/>
+    <property name="cedet.escaped.dir" value="${cedet.dir}"/>
+    <property name="elib.escaped.dir" value="${elib.dir}"/>
+    <property name="src.lisp.escaped.dir" value="${src.lisp.dir}"/>
+    <property name="build.lisp.escaped.dir" value="${build.lisp.dir}"/>
+    <property name="build.lisp.dst.escaped.file" value="${build.lisp.dst.file}"/>
 
     <!-- create the file used to compile the emacs lisp code -->
     <copy file="${build.lisp.src.file}" tofile="${build.lisp.dst.file}"/>
@@ -288,16 +277,6 @@
 
 
   <!-- macros -->
-
-  <!-- make windows paths "mixed" dos paths (cygwin term) -->
-  <macrodef name="mixed-path">
-      <attribute name="property"/>
-      <attribute name="value"/>
-      <sequential>
-	  <propertyregex property="@{property}" input="@{value}" regexp="\\"
-			 defaultValue="@{value}" replace="/" global="true"/>
-      </sequential>
-  </macrodef>
 
   <!-- create distribution zip, gzip and bzip2 tarballs -->
   <macrodef name="package-dist">
